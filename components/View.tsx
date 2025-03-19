@@ -5,7 +5,7 @@ import { writeClient } from "@/sanity/lib/write-client";
 import {  after } from "next/server";
 
 const View = async ({ id }: { id: string }) => {
-  const totalViews  = await client
+  const { views: totalViews } = await client
     .withConfig({ useCdn: false })
     .fetch(ARTICLE_VIEWS_QUERY, { id });
 
@@ -16,7 +16,7 @@ const View = async ({ id }: { id: string }) => {
         .set({ views: totalViews + 1 })
         .commit(),
   );
-
+   console.log(totalViews);
   return (
     <div className="view-container">
       <div className="absolute -top-2 -right-2">

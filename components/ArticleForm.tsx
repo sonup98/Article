@@ -25,6 +25,7 @@ const ArticleForm = () => {
         summary: formData.get("summary") as string,
         category: formData.get("category") as string,
         link: formData.get("link") as string,
+        views: 0 ,
         body,
       };
 
@@ -144,7 +145,7 @@ const ArticleForm = () => {
 
       <div data-color-mode="light">
         <label htmlFor="pitch" className="startup-form_label">
-          Pitch
+         Body
         </label>
 
         <MDEditor
