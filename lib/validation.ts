@@ -23,7 +23,7 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   title: z.string().min(3).max(100),
-  description: z.string().min(20).max(500),
+  summary: z.string().min(20).max(500),
   category: z.string().min(3).max(50),
   link: z.string().url().superRefine(async (url, ctx) => {
     try {
@@ -43,5 +43,5 @@ export const formSchema = z.object({
       });
     }
   }),
-  pitch: z.string().min(10),
+  body: z.string().min(10),
 });

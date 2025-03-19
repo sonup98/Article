@@ -5,10 +5,67 @@ import { parseServerActionResponse } from "@/lib/utils";
 import slugify from "slugify";
 import { writeClient } from "@/sanity/lib/write-client";
 
-export const createPitch = async (
+// export const createPitch = async (
+//   state: any,
+//   form: FormData,
+//   pitch: string,
+// ) => {
+//   const session = await auth();
+
+//   if (!session)
+//     return parseServerActionResponse({
+//       error: "Not signed in",
+//       status: "ERROR",
+//     });
+
+//   const { title, description, category, link } = Object.fromEntries(
+//     Array.from(form).filter(([key]) => key !== "pitch"),
+//   );
+
+//   const slug = slugify(title as string, { lower: true, strict: true });
+
+//   try {
+//     const startup = {
+//       title,
+//       description,
+//       category,
+//       image: link,
+//       slug: {
+//         _type: slug,
+//         current: slug,
+//       },
+//       author: {
+//         _type: "reference",
+//         _ref: session?.id,
+//       },
+//       pitch,
+//     };
+
+//     const result = await writeClient.create({ _type: "startup", ...startup });
+
+//     return parseServerActionResponse({
+//       ...result,
+//       error: "",
+//       status: "SUCCESS",
+//     });
+//   } catch (error) {
+//     console.log(error);
+
+//     return parseServerActionResponse({
+//       error: JSON.stringify(error),
+//       status: "ERROR",
+//     });
+//   }
+// };
+
+
+
+
+
+export const createArticle = async (
   state: any,
   form: FormData,
-  pitch: string,
+  body: string,
 ) => {
   const session = await auth();
 
@@ -18,16 +75,16 @@ export const createPitch = async (
       status: "ERROR",
     });
 
-  const { title, description, category, link } = Object.fromEntries(
-    Array.from(form).filter(([key]) => key !== "pitch"),
+  const { title, summary, category, link } = Object.fromEntries(
+    Array.from(form).filter(([key]) => key !== "body"),
   );
 
   const slug = slugify(title as string, { lower: true, strict: true });
 
   try {
-    const startup = {
+    const article = {
       title,
-      description,
+      summary,
       category,
       image: link,
       slug: {
@@ -38,10 +95,10 @@ export const createPitch = async (
         _type: "reference",
         _ref: session?.id,
       },
-      pitch,
+      body,
     };
 
-    const result = await writeClient.create({ _type: "startup", ...startup });
+    const result = await writeClient.create({ _type: "article", ...article });
 
     return parseServerActionResponse({
       ...result,
