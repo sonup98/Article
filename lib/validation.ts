@@ -30,13 +30,16 @@ export const formSchema = z.object({
       const res = await fetch(url, { method: "HEAD" });
       const contentType = res.headers.get("content-type");
 
-      if (!contentType?.startsWith("image/")) {
+      console.log("Response Headers:", res.headers);
+
+      if (!contentType || !contentType.startsWith("image/")) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "URL must be an image (jpg, png, etc.)",
         });
       }
-    } catch {
+    } catch (error) {
+      console.error("Fetch error:", error);
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Invalid or unreachable URL",
@@ -45,3 +48,4 @@ export const formSchema = z.object({
   }),
   body: z.string().min(10),
 });
+
